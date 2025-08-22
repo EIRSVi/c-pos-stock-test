@@ -7,10 +7,50 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Product>Stock Room Management System</Product>
+    <Description>Modern inventory management system with comprehensive CRUD operations</Description>
+    <Copyright>Copyright © 2025</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.OleDb" Version="9.0.8" />
+    <PackageReference Include="Svg" Version="3.4.7" />
+  </ItemGroup>
+
+  <!-- Database File (only copy if it exists) -->
+  <ItemGroup Condition="Exists('StockRoom.accdb')">
+    <Content Include="StockRoom.accdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- Resource Files Configuration -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Icons\**\*" />
+    <EmbeddedResource Include="Resources\Images\**\*" />
+  </ItemGroup>
+
+  <!-- Content Files (for deployment) -->
+  <ItemGroup>
+    <Content Include="Resources\Icons\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Database\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- Documentation Files -->
+  <ItemGroup>
+    <None Include="Database\DatabaseSetupGuide.md" />
+    <None Include="Resources\README.md" />
+    <None Include="Resources\FontAwesome-Config.md" />
+    <None Include="DatabaseSetup.sql" />
   </ItemGroup>
 
 </Project>

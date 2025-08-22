@@ -35,203 +35,250 @@ namespace Stock_Room
         {
             this.SuspendLayout();
 
-            // Form properties - Full Desktop with no margins
+            // Form properties - Full Desktop with modern design
             this.Text = "Stock Room Management System";
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(0, 0);
             this.Size = Screen.PrimaryScreen.Bounds.Size;
-            this.BackColor = Color.FromArgb(45, 45, 48);
+            this.BackColor = Color.FromArgb(15, 23, 42);
             this.KeyPreview = true;
 
-            // Background Panel - Full screen gradient
+            // Background Panel - Modern gradient
             backgroundPanel = new Panel();
             backgroundPanel.Dock = DockStyle.Fill;
-            backgroundPanel.BackColor = Color.FromArgb(45, 45, 48);
+            backgroundPanel.BackColor = Color.FromArgb(15, 23, 42);
             backgroundPanel.Paint += BackgroundPanel_Paint;
 
             // Get screen dimensions
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
 
-            // Left Panel - For branding and welcome
+            // Left Panel - Enhanced branding
             leftPanel = new Panel();
             leftPanel.Size = new Size(screenWidth / 2, screenHeight);
             leftPanel.Location = new Point(0, 0);
-            leftPanel.BackColor = Color.FromArgb(25, 118, 210);
+            leftPanel.BackColor = Color.FromArgb(37, 99, 235);
             leftPanel.Paint += LeftPanel_Paint;
 
-            // Right Panel - For login controls
+            // Right Panel - Clean login area
             rightPanel = new Panel();
             rightPanel.Size = new Size(screenWidth / 2, screenHeight);
             rightPanel.Location = new Point(screenWidth / 2, 0);
-            rightPanel.BackColor = Color.FromArgb(250, 250, 250);
+            rightPanel.BackColor = Color.FromArgb(248, 250, 252);
 
-            // Logo Panel - Large and centered on left side
+            // Enhanced Logo Panel
             logoPanel = new Panel();
-            logoPanel.Size = new Size(600, 300);
-            logoPanel.Location = new Point((leftPanel.Width - 600) / 2, screenHeight / 4);
+            logoPanel.Size = new Size(600, 400);
+            logoPanel.Location = new Point((leftPanel.Width - 600) / 2, (screenHeight - 400) / 2 - 50);
             logoPanel.BackColor = Color.Transparent;
 
-            // Logo PictureBox - Much larger
+            // Modern Logo Design
             logoPictureBox = new PictureBox();
-            logoPictureBox.Size = new Size(250, 200);
-            logoPictureBox.Location = new Point(175, 20);
-            logoPictureBox.BackColor = Color.FromArgb(33, 150, 243);
+            logoPictureBox.Size = new Size(200, 160);
+            logoPictureBox.Location = new Point(200, 30);
+            logoPictureBox.BackColor = Color.White;
             logoPictureBox.BorderStyle = BorderStyle.None;
             logoPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
             
-            // Enhanced logo graphics
+            // Enhanced modern logo
             logoPictureBox.Paint += (s, e) =>
             {
-                // Draw a modern logo design
-                using (Font font = new Font("Arial Black", 24, FontStyle.Bold))
-                using (Brush whiteBrush = new SolidBrush(Color.White))
-                using (Brush blueBrush = new SolidBrush(Color.FromArgb(13, 71, 161)))
+                // Create modern logo with shadow effect
+                using (var shadowBrush = new SolidBrush(Color.FromArgb(50, 0, 0, 0)))
                 {
-                    e.Graphics.FillRectangle(whiteBrush, 0, 0, 250, 200);
-                    e.Graphics.DrawString("??", new Font("Arial", 40), blueBrush, new PointF(100, 30));
-                    e.Graphics.DrawString("STOCK", font, blueBrush, new PointF(60, 90));
-                    e.Graphics.DrawString("ROOM", font, blueBrush, new PointF(75, 125));
+                    e.Graphics.FillEllipse(shadowBrush, 5, 5, 190, 150);
+                }
+                
+                using (var backgroundBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                    new Rectangle(0, 0, 200, 160),
+                    Color.White,
+                    Color.FromArgb(248, 250, 252),
+                    System.Drawing.Drawing2D.LinearGradientMode.Vertical))
+                {
+                    e.Graphics.FillEllipse(backgroundBrush, 0, 0, 190, 150);
+                }
+                
+                // Draw modern icon
+                using (Font iconFont = new Font("Arial", 48, FontStyle.Bold))
+                using (Brush iconBrush = new SolidBrush(Color.FromArgb(37, 99, 235)))
+                {
+                    e.Graphics.DrawString("??", iconFont, iconBrush, new PointF(70, 30));
+                }
+                
+                using (Font titleFont = new Font("Arial", 14, FontStyle.Bold))
+                using (Brush titleBrush = new SolidBrush(Color.FromArgb(15, 23, 42)))
+                {
+                    e.Graphics.DrawString("STOCK", titleFont, titleBrush, new PointF(70, 90));
+                    e.Graphics.DrawString("ROOM", titleFont, titleBrush, new PointF(75, 110));
                 }
             };
 
-            // Title Label - Large and prominent
+            // Enhanced Title Label
             titleLabel = new Label();
-            titleLabel.Text = "STOCK ROOM\nMANAGEMENT SYSTEM";
-            titleLabel.Font = new Font("Arial", 28, FontStyle.Bold);
+            titleLabel.Text = "?? STOCK ROOM\nMANAGEMENT SYSTEM";
+            titleLabel.Font = new Font("Arial", 32, FontStyle.Bold);
             titleLabel.ForeColor = Color.White;
             titleLabel.Size = new Size(500, 120);
-            titleLabel.Location = new Point(50, 240);
+            titleLabel.Location = new Point(50, 220);
             titleLabel.TextAlign = ContentAlignment.MiddleCenter;
+
+            // Add subtitle
+            Label subtitleLabel = new Label();
+            subtitleLabel.Text = "?? Modern inventory management made simple";
+            subtitleLabel.Font = new Font("Arial", 16);
+            subtitleLabel.ForeColor = Color.FromArgb(219, 234, 254);
+            subtitleLabel.Size = new Size(500, 30);
+            subtitleLabel.Location = new Point(50, 340);
+            subtitleLabel.TextAlign = ContentAlignment.MiddleCenter;
 
             logoPanel.Controls.Add(logoPictureBox);
             logoPanel.Controls.Add(titleLabel);
+            logoPanel.Controls.Add(subtitleLabel);
             leftPanel.Controls.Add(logoPanel);
 
-            // Login Panel - Centered on right side
+            // Modern Login Panel
             loginPanel = new Panel();
-            loginPanel.Size = new Size(500, 450);
-            loginPanel.Location = new Point((rightPanel.Width - 500) / 2, (screenHeight - 450) / 2);
+            loginPanel.Size = new Size(480, 520);
+            loginPanel.Location = new Point((rightPanel.Width - 480) / 2, (screenHeight - 520) / 2);
             loginPanel.BackColor = Color.White;
             loginPanel.BorderStyle = BorderStyle.None;
 
-            // Add shadow effect
+            // Enhanced shadow and styling
             loginPanel.Paint += (s, e) =>
             {
-                // Draw shadow
-                using (Brush shadowBrush = new SolidBrush(Color.FromArgb(50, 0, 0, 0)))
+                // Multi-layer shadow for depth
+                for (int i = 1; i <= 8; i++)
                 {
-                    e.Graphics.FillRectangle(shadowBrush, 5, 5, loginPanel.Width - 5, loginPanel.Height - 5);
+                    using (Brush shadowBrush = new SolidBrush(Color.FromArgb(5, 0, 0, 0)))
+                    {
+                        e.Graphics.FillRectangle(shadowBrush, i, i, loginPanel.Width, loginPanel.Height);
+                    }
+                }
+                
+                // Subtle border
+                using (Pen borderPen = new Pen(Color.FromArgb(229, 231, 235), 1))
+                {
+                    e.Graphics.DrawRectangle(borderPen, 0, 0, loginPanel.Width - 1, loginPanel.Height - 1);
                 }
             };
 
-            // Login Title
+            // Welcome Header
             Label loginTitle = new Label();
-            loginTitle.Text = "WELCOME BACK";
-            loginTitle.Font = new Font("Arial", 24, FontStyle.Bold);
-            loginTitle.ForeColor = Color.FromArgb(25, 118, 210);
-            loginTitle.Size = new Size(450, 40);
-            loginTitle.Location = new Point(25, 30);
+            loginTitle.Text = "?? WELCOME BACK";
+            loginTitle.Font = new Font("Arial", 28, FontStyle.Bold);
+            loginTitle.ForeColor = Color.FromArgb(15, 23, 42);
+            loginTitle.Size = new Size(420, 50);
+            loginTitle.Location = new Point(30, 40);
             loginTitle.TextAlign = ContentAlignment.MiddleCenter;
 
-            // Username Label
-            usernameLabel = new Label();
-            usernameLabel.Text = "Username";
-            usernameLabel.Font = new Font("Arial", 16, FontStyle.Bold);
-            usernameLabel.ForeColor = Color.FromArgb(66, 66, 66);
-            usernameLabel.Size = new Size(150, 30);
-            usernameLabel.Location = new Point(50, 100);
+            Label loginSubtitle = new Label();
+            loginSubtitle.Text = "Please sign in to your account";
+            loginSubtitle.Font = new Font("Arial", 14);
+            loginSubtitle.ForeColor = Color.FromArgb(107, 114, 128);
+            loginSubtitle.Size = new Size(420, 25);
+            loginSubtitle.Location = new Point(30, 90);
+            loginSubtitle.TextAlign = ContentAlignment.MiddleCenter;
 
-            // Username TextBox - Fixed for proper input
-            usernameTextBox = new TextBox();
-            usernameTextBox.Font = new Font("Arial", 16);
-            usernameTextBox.Size = new Size(398, 38);
-            usernameTextBox.Location = new Point(51, 136);
-            usernameTextBox.BorderStyle = BorderStyle.FixedSingle;
-            usernameTextBox.BackColor = Color.White;
-            usernameTextBox.ForeColor = Color.Black;
-            usernameTextBox.TabIndex = 0;
-            usernameTextBox.Text = ""; // Ensure it's empty
-            usernameTextBox.Enabled = true; // Ensure it's enabled
-            usernameTextBox.ReadOnly = false; // Ensure it's not read-only
-            usernameTextBox.Cursor = Cursors.IBeam; // Set proper cursor
-            
-            // Custom border for textbox - Add BEFORE the textbox
+            // Enhanced Username Section
+            usernameLabel = new Label();
+            usernameLabel.Text = "?? Username";
+            usernameLabel.Font = new Font("Arial", 14, FontStyle.Regular);
+            usernameLabel.ForeColor = Color.FromArgb(55, 65, 81);
+            usernameLabel.SetBounds(40, 140, 150, 25);
+
+            // Modern text input styling
             Panel usernameBorder = new Panel();
             usernameBorder.Size = new Size(402, 42);
-            usernameBorder.Location = new Point(49, 134);
-            usernameBorder.BackColor = Color.FromArgb(25, 118, 210);
-            usernameBorder.SendToBack(); // Ensure border stays behind
-            loginPanel.Controls.Add(usernameBorder);
+            usernameBorder.Location = new Point(39, 169);
+            usernameBorder.BackColor = Color.FromArgb(37, 99, 235);
 
-            // Password Label
+            usernameTextBox = new TextBox();
+            usernameTextBox.Font = new Font("Arial", 14);
+            usernameTextBox.Size = new Size(398, 38);
+            usernameTextBox.Location = new Point(41, 171);
+            usernameTextBox.BorderStyle = BorderStyle.FixedSingle;
+            usernameTextBox.BackColor = Color.White;
+            usernameTextBox.ForeColor = Color.FromArgb(31, 41, 55);
+            usernameTextBox.TabIndex = 0;
+            usernameTextBox.Text = "";
+            usernameTextBox.Enabled = true;
+            usernameTextBox.ReadOnly = false;
+            usernameTextBox.Cursor = Cursors.IBeam;
+
+            // Enhanced Password Section
             passwordLabel = new Label();
-            passwordLabel.Text = "Password";
-            passwordLabel.Font = new Font("Arial", 16, FontStyle.Bold);
-            passwordLabel.ForeColor = Color.FromArgb(66, 66, 66);
-            passwordLabel.Size = new Size(150, 30);
-            passwordLabel.Location = new Point(50, 200);
+            passwordLabel.Text = "?? Password";
+            passwordLabel.Font = new Font("Arial", 14, FontStyle.Regular);
+            passwordLabel.ForeColor = Color.FromArgb(55, 65, 81);
+            passwordLabel.SetBounds(40, 230, 150, 25);
 
-            // Password TextBox - Fixed for proper input
-            passwordTextBox = new TextBox();
-            passwordTextBox.Font = new Font("Arial", 16);
-            passwordTextBox.Size = new Size(398, 38);
-            passwordTextBox.Location = new Point(51, 236);
-            passwordTextBox.BorderStyle = BorderStyle.FixedSingle;
-            passwordTextBox.BackColor = Color.White;
-            passwordTextBox.ForeColor = Color.Black;
-            passwordTextBox.UseSystemPasswordChar = true;
-            passwordTextBox.TabIndex = 1;
-            passwordTextBox.Text = ""; // Ensure it's empty
-            passwordTextBox.Enabled = true; // Ensure it's enabled
-            passwordTextBox.ReadOnly = false; // Ensure it's not read-only
-            passwordTextBox.Cursor = Cursors.IBeam; // Set proper cursor
-
-            // Custom border for password textbox - Add BEFORE the textbox
             Panel passwordBorder = new Panel();
             passwordBorder.Size = new Size(402, 42);
-            passwordBorder.Location = new Point(49, 234);
-            passwordBorder.BackColor = Color.FromArgb(25, 118, 210);
-            passwordBorder.SendToBack(); // Ensure border stays behind
-            loginPanel.Controls.Add(passwordBorder);
+            passwordBorder.Location = new Point(39, 259);
+            passwordBorder.BackColor = Color.FromArgb(37, 99, 235);
 
-            // Login Button - Large and modern
+            passwordTextBox = new TextBox();
+            passwordTextBox.Font = new Font("Arial", 14);
+            passwordTextBox.Size = new Size(398, 38);
+            passwordTextBox.Location = new Point(41, 261);
+            passwordTextBox.BorderStyle = BorderStyle.FixedSingle;
+            passwordTextBox.BackColor = Color.White;
+            passwordTextBox.ForeColor = Color.FromArgb(31, 41, 55);
+            passwordTextBox.UseSystemPasswordChar = true;
+            passwordTextBox.TabIndex = 1;
+            passwordTextBox.Text = "";
+            passwordTextBox.Enabled = true;
+            passwordTextBox.ReadOnly = false;
+            passwordTextBox.Cursor = Cursors.IBeam;
+
+            // Modern Login Button
             loginButton = new Button();
-            loginButton.Text = "LOGIN";
-            loginButton.Font = new Font("Arial", 18, FontStyle.Bold);
-            loginButton.Size = new Size(400, 55);
-            loginButton.Location = new Point(50, 300);
-            loginButton.BackColor = Color.FromArgb(25, 118, 210);
+            loginButton.Text = "?? SIGN IN";
+            loginButton.Font = new Font("Arial", 16, FontStyle.Bold);
+            loginButton.Size = new Size(400, 50);
+            loginButton.Location = new Point(40, 330);
+            loginButton.BackColor = Color.FromArgb(37, 99, 235);
             loginButton.ForeColor = Color.White;
             loginButton.FlatStyle = FlatStyle.Flat;
             loginButton.FlatAppearance.BorderSize = 0;
             loginButton.Cursor = Cursors.Hand;
             loginButton.Click += LoginButton_Click;
 
-            // Hover effect for login button
-            loginButton.MouseEnter += (s, e) => loginButton.BackColor = Color.FromArgb(21, 101, 192);
-            loginButton.MouseLeave += (s, e) => loginButton.BackColor = Color.FromArgb(25, 118, 210);
-
-            // Exit Button - Styled
+            // Modern Exit Button
             exitButton = new Button();
-            exitButton.Text = "EXIT APPLICATION";
-            exitButton.Font = new Font("Arial", 14, FontStyle.Bold);
+            exitButton.Text = "? EXIT APPLICATION";
+            exitButton.Font = new Font("Arial", 14);
             exitButton.Size = new Size(400, 45);
-            exitButton.Location = new Point(50, 370);
-            exitButton.BackColor = Color.FromArgb(244, 67, 54);
+            exitButton.Location = new Point(40, 395);
+            exitButton.BackColor = Color.FromArgb(239, 68, 68);
             exitButton.ForeColor = Color.White;
             exitButton.FlatStyle = FlatStyle.Flat;
             exitButton.FlatAppearance.BorderSize = 0;
             exitButton.Cursor = Cursors.Hand;
             exitButton.Click += ExitButton_Click;
 
-            // Hover effect for exit button
-            exitButton.MouseEnter += (s, e) => exitButton.BackColor = Color.FromArgb(229, 57, 53);
-            exitButton.MouseLeave += (s, e) => exitButton.BackColor = Color.FromArgb(244, 67, 54);
+            // Enhanced hover effects
+            loginButton.MouseEnter += (s, e) => {
+                loginButton.BackColor = Color.FromArgb(29, 78, 216);
+            };
+            loginButton.MouseLeave += (s, e) => {
+                loginButton.BackColor = Color.FromArgb(37, 99, 235);
+            };
 
+            exitButton.MouseEnter += (s, e) => {
+                exitButton.BackColor = Color.FromArgb(220, 38, 38);
+            };
+            exitButton.MouseLeave += (s, e) => {
+                exitButton.BackColor = Color.FromArgb(239, 68, 68);
+            };
+
+            // Add controls to login panel
+            loginPanel.Controls.Add(usernameBorder);
+            loginPanel.Controls.Add(passwordBorder);
             loginPanel.Controls.Add(loginTitle);
+            loginPanel.Controls.Add(loginSubtitle);
             loginPanel.Controls.Add(usernameLabel);
             loginPanel.Controls.Add(usernameTextBox);
             loginPanel.Controls.Add(passwordLabel);
@@ -239,64 +286,76 @@ namespace Stock_Room
             loginPanel.Controls.Add(loginButton);
             loginPanel.Controls.Add(exitButton);
 
-            // Ensure textboxes are brought to front for input
             usernameTextBox.BringToFront();
             passwordTextBox.BringToFront();
 
             rightPanel.Controls.Add(loginPanel);
 
-            // Credentials Panel - Bottom right corner
+            // Enhanced Credentials Panel
             credentialsPanel = new Panel();
-            credentialsPanel.Size = new Size(450, 280);
-            credentialsPanel.Location = new Point(screenWidth - 470, screenHeight - 300);
-            credentialsPanel.BackColor = Color.FromArgb(255, 243, 224);
+            credentialsPanel.Size = new Size(440, 300);
+            credentialsPanel.Location = new Point(screenWidth - 460, screenHeight - 320);
+            credentialsPanel.BackColor = Color.White;
             credentialsPanel.BorderStyle = BorderStyle.None;
 
-            // Custom border for credentials
             credentialsPanel.Paint += (s, e) =>
             {
-                using (Pen borderPen = new Pen(Color.FromArgb(255, 193, 7), 3))
+                // Shadow effect
+                for (int i = 1; i <= 4; i++)
+                {
+                    using (Brush shadowBrush = new SolidBrush(Color.FromArgb(10, 0, 0, 0)))
+                    {
+                        e.Graphics.FillRectangle(shadowBrush, i, i, credentialsPanel.Width, credentialsPanel.Height);
+                    }
+                }
+                
+                // Colored top border
+                using (Brush borderBrush = new SolidBrush(Color.FromArgb(245, 158, 11)))
+                {
+                    e.Graphics.FillRectangle(borderBrush, 0, 0, credentialsPanel.Width, 4);
+                }
+                
+                // Main border
+                using (Pen borderPen = new Pen(Color.FromArgb(229, 231, 235), 1))
                 {
                     e.Graphics.DrawRectangle(borderPen, 0, 0, credentialsPanel.Width - 1, credentialsPanel.Height - 1);
                 }
             };
 
-            // Credentials Title
             credentialsTitle = new Label();
             credentialsTitle.Text = "?? DEMO CREDENTIALS";
             credentialsTitle.Font = new Font("Arial", 16, FontStyle.Bold);
-            credentialsTitle.Size = new Size(400, 35);
-            credentialsTitle.Location = new Point(20, 15);
-            credentialsTitle.ForeColor = Color.FromArgb(255, 143, 0);
+            credentialsTitle.Size = new Size(400, 30);
+            credentialsTitle.Location = new Point(20, 20);
+            credentialsTitle.ForeColor = Color.FromArgb(245, 158, 11);
             credentialsTitle.TextAlign = ContentAlignment.MiddleCenter;
 
-            // Credentials Information - Better formatted
             credentialsInfo = new Label();
-            credentialsInfo.Text = "????? ADMINISTRATOR\n" +
+            credentialsInfo.Text = "?? ADMINISTRATOR\n" +
                                  "   Username: admin\n" +
                                  "   Password: admin123\n\n" +
                                  "?? REGULAR USER\n" +
                                  "   Username: user1\n" +
                                  "   Password: user123\n\n" +
-                                 "????? MANAGER\n" +
+                                 "?? MANAGER\n" +
                                  "   Username: manager\n" +
                                  "   Password: manager123";
-            credentialsInfo.Font = new Font("Arial", 13, FontStyle.Regular);
-            credentialsInfo.Size = new Size(400, 210);
-            credentialsInfo.Location = new Point(25, 55);
-            credentialsInfo.ForeColor = Color.FromArgb(101, 87, 74);
+            credentialsInfo.Font = new Font("Arial", 12);
+            credentialsInfo.Size = new Size(400, 220);
+            credentialsInfo.Location = new Point(25, 60);
+            credentialsInfo.ForeColor = Color.FromArgb(75, 85, 99);
 
             credentialsPanel.Controls.Add(credentialsTitle);
             credentialsPanel.Controls.Add(credentialsInfo);
 
-            // Status Label - Positioned better
+            // Enhanced Status Label
             statusLabel = new Label();
             statusLabel.Text = "";
-            statusLabel.Font = new Font("Arial", 14, FontStyle.Bold);
-            statusLabel.Size = new Size(screenWidth, 40);
-            statusLabel.Location = new Point(0, screenHeight - 50);
+            statusLabel.Font = new Font("Arial", 14, FontStyle.Regular);
+            statusLabel.Size = new Size(screenWidth, 50);
+            statusLabel.Location = new Point(0, screenHeight - 60);
             statusLabel.ForeColor = Color.White;
-            statusLabel.BackColor = Color.FromArgb(100, 244, 67, 54);
+            statusLabel.BackColor = Color.FromArgb(180, 239, 68, 68);
             statusLabel.TextAlign = ContentAlignment.MiddleCenter;
             statusLabel.Visible = false;
 
@@ -306,44 +365,27 @@ namespace Stock_Room
             backgroundPanel.Controls.Add(credentialsPanel);
             backgroundPanel.Controls.Add(statusLabel);
 
-            // Add background to form
             this.Controls.Add(backgroundPanel);
 
             // Form events
             this.KeyDown += LoginForm_KeyDown;
             this.Load += LoginForm_Load;
 
-            // Add click handlers to help with focus issues
-            loginPanel.Click += (s, e) =>
-            {
-                // If user clicks on login panel, focus the username textbox
-                usernameTextBox.Focus();
-            };
-            
-            // Add debugging click handler for textboxes
-            usernameTextBox.Click += (s, e) =>
-            {
-                usernameTextBox.Focus();
-                usernameTextBox.Select();
-            };
-            
-            passwordTextBox.Click += (s, e) =>
-            {
-                passwordTextBox.Focus();
-                passwordTextBox.Select();
-            };
+            // Focus handling
+            loginPanel.Click += (s, e) => usernameTextBox.Focus();
+            usernameTextBox.Click += (s, e) => { usernameTextBox.Focus(); usernameTextBox.Select(); };
+            passwordTextBox.Click += (s, e) => { passwordTextBox.Focus(); passwordTextBox.Select(); };
 
             this.ResumeLayout();
         }
 
         private void BackgroundPanel_Paint(object sender, PaintEventArgs e)
         {
-            // Create gradient background
             using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(
                 backgroundPanel.ClientRectangle,
-                Color.FromArgb(45, 45, 48),
-                Color.FromArgb(33, 33, 36),
-                System.Drawing.Drawing2D.LinearGradientMode.Vertical))
+                Color.FromArgb(15, 23, 42),
+                Color.FromArgb(30, 41, 59),
+                System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal))
             {
                 e.Graphics.FillRectangle(brush, backgroundPanel.ClientRectangle);
             }
@@ -351,40 +393,37 @@ namespace Stock_Room
 
         private void LeftPanel_Paint(object sender, PaintEventArgs e)
         {
-            // Create gradient for left panel
             using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(
                 leftPanel.ClientRectangle,
-                Color.FromArgb(25, 118, 210),
-                Color.FromArgb(13, 71, 161),
+                Color.FromArgb(37, 99, 235),
+                Color.FromArgb(29, 78, 216),
                 System.Drawing.Drawing2D.LinearGradientMode.Vertical))
             {
                 e.Graphics.FillRectangle(brush, leftPanel.ClientRectangle);
             }
 
-            // Add decorative elements
-            using (var pen = new Pen(Color.FromArgb(100, 255, 255, 255), 2))
+            // Add modern geometric patterns
+            using (var patternBrush = new SolidBrush(Color.FromArgb(20, 255, 255, 255)))
             {
-                // Draw some decorative lines
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < leftPanel.Height; i += 100)
                 {
-                    e.Graphics.DrawLine(pen, 0, i * 100, leftPanel.Width, i * 100);
+                    e.Graphics.FillEllipse(patternBrush, -50, i, 200, 200);
+                    e.Graphics.FillEllipse(patternBrush, leftPanel.Width - 150, i + 50, 200, 200);
                 }
             }
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            // Test database connection
-            if (!dbHelper.TestConnection())
+            if (!dbHelper.IsDatabaseAvailable())
             {
-                ShowStatus("Demo Mode: Database not connected. Using test credentials below.", Color.FromArgb(255, 193, 7));
+                ShowStatus("?? Demo Mode: Database not connected. Using demo credentials.", Color.FromArgb(245, 158, 11));
             }
             else
             {
-                ShowStatus("Connected to database successfully.", Color.FromArgb(76, 175, 80));
+                ShowStatus("? Connected to database successfully.", Color.FromArgb(34, 197, 94));
             }
             
-            // Ensure textboxes are properly set up for input
             usernameTextBox.Focus();
             usernameTextBox.Select();
             usernameTextBox.TabIndex = 0;
@@ -392,7 +431,7 @@ namespace Stock_Room
             loginButton.TabIndex = 2;
             exitButton.TabIndex = 3;
             
-            // Add Enter key handling for textboxes
+            // Enhanced keyboard navigation
             usernameTextBox.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -411,37 +450,21 @@ namespace Stock_Room
                 }
             };
 
-            // Add focus events for visual feedback
-            usernameTextBox.Enter += (s, e) =>
-            {
-                usernameTextBox.BackColor = Color.FromArgb(240, 248, 255);
-            };
-            
-            usernameTextBox.Leave += (s, e) =>
-            {
-                usernameTextBox.BackColor = Color.White;
-            };
-            
-            passwordTextBox.Enter += (s, e) =>
-            {
-                passwordTextBox.BackColor = Color.FromArgb(240, 248, 255);
-            };
-            
-            passwordTextBox.Leave += (s, e) =>
-            {
-                passwordTextBox.BackColor = Color.White;
-            };
+            // Enhanced visual feedback
+            usernameTextBox.Enter += (s, e) => usernameTextBox.BackColor = Color.FromArgb(239, 246, 255);
+            usernameTextBox.Leave += (s, e) => usernameTextBox.BackColor = Color.White;
+            passwordTextBox.Enter += (s, e) => passwordTextBox.BackColor = Color.FromArgb(239, 246, 255);
+            passwordTextBox.Leave += (s, e) => passwordTextBox.BackColor = Color.White;
         }
 
         private void ShowStatus(string message, Color color)
         {
             statusLabel.Text = message;
-            statusLabel.BackColor = Color.FromArgb(200, color.R, color.G, color.B);
+            statusLabel.BackColor = Color.FromArgb(220, color.R, color.G, color.B);
             statusLabel.Visible = true;
             
-            // Auto-hide after 3 seconds
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = 3000;
+            timer.Interval = 4000;
             timer.Tick += (s, e) =>
             {
                 statusLabel.Visible = false;
@@ -461,37 +484,85 @@ namespace Stock_Room
             {
                 ExitButton_Click(sender, e);
             }
-            else if (e.KeyCode == Keys.F11)
+            else if (e.KeyCode == Keys.F1)
             {
-                // F11 to toggle (currently always fullscreen)
-                MessageBox.Show("Application is running in full desktop mode", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("?? Stock Room Management System\n\n" +
+                              "?? Use the demo credentials shown in the bottom right corner\n" +
+                              "?? Press Enter to login or Esc to exit\n" +
+                              "??? Click on any input field to start typing",
+                              "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void LoginButton_Click(object sender, EventArgs e)
+        private async void LoginButton_Click(object sender, EventArgs e)
         {
             string username = usernameTextBox.Text.Trim();
             string password = passwordTextBox.Text;
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                ShowStatus("Please enter both username and password.", Color.FromArgb(244, 67, 54));
+                ShowStatus("?? Please enter both username and password.", Color.FromArgb(239, 68, 68));
                 return;
             }
 
-            ShowStatus("Authenticating user...", Color.FromArgb(33, 150, 243));
+            ShowStatus("?? Authenticating user...", Color.FromArgb(37, 99, 235));
 
             try
             {
-                if (dbHelper.ValidateUser(username, password))
+                // Check if database is available first
+                if (!dbHelper.IsDatabaseAvailable())
                 {
-                    UserInfo userInfo = dbHelper.GetUserInfo(username);
+                    // Demo mode - allow hardcoded credentials
+                    if ((username == "admin" && password == "admin123") ||
+                        (username == "user1" && password == "user123") ||
+                        (username == "manager" && password == "manager123"))
+                    {
+                        var demoUser = new UserInfo
+                        {
+                            UserID = 1,
+                            Username = username,
+                            FullName = username == "admin" ? "Demo Administrator" :
+                                      username == "manager" ? "Demo Manager" : "Demo User",
+                            UserRole = username == "admin" ? "Admin" :
+                                      username == "manager" ? "Manager" : "User",
+                            Status = "Active"
+                        };
+
+                        ShowStatus($"? Welcome {demoUser.FullName}! (Demo Mode)", Color.FromArgb(34, 197, 94));
+                        
+                        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+                        timer.Interval = 1500;
+                        timer.Tick += (s, args) =>
+                        {
+                            timer.Stop();
+                            timer.Dispose();
+                            
+                            this.Hide();
+                            DashboardForm dashboard = new DashboardForm(demoUser);
+                            dashboard.ShowDialog();
+                            this.Close();
+                        };
+                        timer.Start();
+                        return;
+                    }
+                    else
+                    {
+                        ShowStatus("? Invalid demo credentials. Check the demo panel for valid usernames/passwords.", Color.FromArgb(239, 68, 68));
+                        passwordTextBox.Clear();
+                        usernameTextBox.Focus();
+                        return;
+                    }
+                }
+
+                // Normal database authentication
+                var userInfo = await dbHelper.ValidateUserAsync(username, password);
+                
+                if (userInfo != null)
+                {
+                    ShowStatus($"? Welcome {userInfo.FullName}! Loading dashboard...", Color.FromArgb(34, 197, 94));
                     
-                    ShowStatus($"Welcome {userInfo.FullName}! Loading dashboard...", Color.FromArgb(76, 175, 80));
-                    
-                    // Add delay for better UX
                     System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-                    timer.Interval = 1000;
+                    timer.Interval = 1500;
                     timer.Tick += (s, args) =>
                     {
                         timer.Stop();
@@ -506,22 +577,22 @@ namespace Stock_Room
                 }
                 else
                 {
-                    ShowStatus("Invalid credentials. Please check username and password.", Color.FromArgb(244, 67, 54));
+                    ShowStatus("? Invalid credentials. Please check username and password.", Color.FromArgb(239, 68, 68));
                     passwordTextBox.Clear();
                     usernameTextBox.Focus();
                 }
             }
             catch (Exception ex)
             {
-                ShowStatus("Login failed. Please try again.", Color.FromArgb(244, 67, 54));
-                MessageBox.Show($"Error: {ex.Message}", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowStatus("?? Login failed. Please try again.", Color.FromArgb(239, 68, 68));
+                MessageBox.Show($"Error: {ex.Message}\n\nIf database is not available, use demo credentials shown on screen.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit Application", 
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("?? Are you sure you want to exit the application?", 
+                "Exit Application", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             
             if (result == DialogResult.Yes)
             {
